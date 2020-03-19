@@ -3,17 +3,22 @@ package com.udacity.sandwichclub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.udacity.sandwichclub.model.Sandwich;
 import com.udacity.sandwichclub.utils.JsonUtils;
 
+import org.json.JSONException;
+
 public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_POSITION = "extra_position";
     private static final int DEFAULT_POSITION = -1;
+    private static final String TAG = "DetailActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +41,20 @@ public class DetailActivity extends AppCompatActivity {
 
         String[] sandwiches = getResources().getStringArray(R.array.sandwich_details);
         String json = sandwiches[position];
-        Sandwich sandwich = JsonUtils.parseSandwichJson(json);
+        Sandwich sandwich = null;
+        try {
+            sandwich = JsonUtils.parseSandwichJson(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         if (sandwich == null) {
             // Sandwich data unavailable
             closeOnError();
             return;
         }
+        Log.v(TAG, sandwich.toString());
 
-        populateUI();
+        populateUI(sandwich);
         Picasso.with(this)
                 .load(sandwich.getImage())
                 .into(ingredientsIv);
@@ -56,7 +67,15 @@ public class DetailActivity extends AppCompatActivity {
         Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
     }
 
-    private void populateUI() {
-
+    private void populateUI(Sandwich sandwich) {
+        // TODO(mengge): redesign populateUI function
+        TextView mOrigin = findViewById(R.id.origin_tv);
+        mOrigin.setText(sandwich.getPlaceOfOrigin());
+        TextView mIngredients = findViewById(R.id.ingredients_tv);
+        mIngredients.setText(sandwich.getIngredientsString());
+        TextView mAlsoKnownAs = findViewById(R.id.also_known_tv);
+        mAlsoKnownAs.setText(sandwich.getAlsoKnownAsString());
+        TextView mDescription = findViewById(R.id.description_tv);
+        mDescription.setText(sandwich.getDescription());
     }
 }

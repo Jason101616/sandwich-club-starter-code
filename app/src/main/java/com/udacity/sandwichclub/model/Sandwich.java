@@ -27,7 +27,7 @@ public class Sandwich {
     }
 
     public String getMainName() {
-        return mainName;
+        return mainName.length() > 0 ? mainName : "Unavailable right now.";
     }
 
     public void setMainName(String mainName) {
@@ -38,12 +38,16 @@ public class Sandwich {
         return alsoKnownAs;
     }
 
+    public String getAlsoKnownAsString() {
+        return alsoKnownAs.size() > 0 ? alsoKnownAs.toString() : "Unavailable right now.";
+    }
+
     public void setAlsoKnownAs(List<String> alsoKnownAs) {
         this.alsoKnownAs = alsoKnownAs;
     }
 
     public String getPlaceOfOrigin() {
-        return placeOfOrigin;
+        return placeOfOrigin.length() > 0 ? placeOfOrigin : "Unavailable right now.";
     }
 
     public void setPlaceOfOrigin(String placeOfOrigin) {
@@ -51,7 +55,7 @@ public class Sandwich {
     }
 
     public String getDescription() {
-        return description;
+        return description.length() > 0 ? description : "Unavailable right now.";
     }
 
     public void setDescription(String description) {
@@ -70,7 +74,23 @@ public class Sandwich {
         return ingredients;
     }
 
+    public String getIngredientsString() {
+        return ingredients.size() > 0 ? ingredients.toString() : "Unavailable right now.";
+    }
+
     public void setIngredients(List<String> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sB = new StringBuilder();
+        sB.append("mainName: ").append(getMainName()).append("\n");
+        sB.append("alsoKnownAs: ").append(getAlsoKnownAs().toString()).append("\n");
+        sB.append("placeOfOrigin: ").append(getPlaceOfOrigin()).append("\n");
+        sB.append("description: ").append(getDescription()).append("\n");
+        sB.append("image: ").append(getImage()).append("\n");
+        sB.append("ingredients: ").append(getIngredients().toString());
+        return sB.toString();
     }
 }
