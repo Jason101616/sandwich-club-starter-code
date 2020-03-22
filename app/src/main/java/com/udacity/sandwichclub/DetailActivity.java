@@ -68,7 +68,6 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void populateUI(Sandwich sandwich) {
-        // TODO(mengge): redesign populateUI function
         TextView mOrigin = findViewById(R.id.origin_tv);
         mOrigin.setText(sandwich.getPlaceOfOrigin());
         TextView mIngredients = findViewById(R.id.ingredients_tv);

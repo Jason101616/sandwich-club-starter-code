@@ -12,7 +12,6 @@ import java.util.List;
 public class JsonUtils {
 
     public static Sandwich parseSandwichJson(String json) throws JSONException {
-        // TODO(mengge): write your own Json parser
         final String NAME = "name";
         final String MAIN_NAME = "mainName";
         final String ALSO_KNOWN_AS = "alsoKnownAs";
